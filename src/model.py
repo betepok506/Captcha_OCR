@@ -8,9 +8,9 @@ from sklearn.preprocessing import LabelEncoder
 import numpy as np
 
 
-class CNN_LSTM(nn.Module):
+class CNN_GRU(nn.Module):
     def __init__(self):
-        super(CNN_LSTM, self).__init__()
+        super(CNN_GRU, self).__init__()
         self.dropout_percentage = 0.5
         self.conv_layers = nn.Sequential(
             # BLOCK-1 (starting block) input=(224x224) output=(56x56)
@@ -54,57 +54,6 @@ class CNN_LSTM(nn.Module):
             return x, loss
 
         return x, None
-    # def __init__(self):
-    #     super(FCNN_LSTM, self).__init__()
-    #     self.conv_layers = nn.Sequential(
-    #         nn.Conv2d(in_channels=1, out_channels=128, kernel_size=3, padding=1),
-    #         nn.ReLU(),
-    #         nn.MaxPool2d(kernel_size=2),
-    #
-    #         nn.Conv2d(in_channels=128, out_channels=64, kernel_size=3, padding=1),
-    #         nn.ReLU(),
-    #         nn.MaxPool2d(kernel_size=(2, 8)),
-    #         #
-    #         # nn.Conv2d(in_channels=64, out_channels=32, kernel_size=3, padding=1),
-    #         # nn.ReLU(),
-    #         # nn.MaxPool2d(kernel_size=(8, 2)),
-    #         #
-    #         # nn.Conv2d(in_channels=128, out_channels=256, kernel_size=3, padding=1),
-    #         # nn.ReLU(),
-    #         # nn.MaxPool2d(kernel_size=(2, 8))
-    #     )
-    #     self.linear_1 = nn.Linear(768, 128)
-    #     self.lstm = nn.GRU(128,
-    #                         32,
-    #                         bidirectional=True,
-    #                         batch_first=True)
-    #
-    #     self.linear_2 = nn.Linear(64, 20)
-    #
-    # def forward(self, x, targets):
-    #     bs, _, _, _ = x.size()
-    #     x = self.conv_layers(x)
-    #     x = x.permute(0, 3, 1, 2)
-    #     x = x.view(bs, x.size(1), -1)
-    #     x = self.linear_1(x)
-    #     x = nn.functional.relu(x)
-    #     x, h = self.lstm(x)
-    #     x = self.linear_2(x)
-    #     x = x.permute(1, 0, 2)
-    #     if targets is not None:
-    #         log_probs = nn.functional.log_softmax(x, 2)
-    #
-    #         input_lengths = torch.full(size=(bs,), fill_value=log_probs.size(0),
-    #                                    dtype=torch.int32)
-    #
-    #         target_lengths = torch.full(size=(bs,), fill_value=targets.size(1),
-    #                                     dtype=torch.int32)
-    #
-    #         loss = nn.CTCLoss(blank=19)(log_probs, targets, input_lengths, target_lengths)
-    #
-    #         return x, loss
-    #
-    #     return x, None
 
 
 class OCR:
@@ -113,7 +62,7 @@ class OCR:
     """
 
     def __init__(self):
-        self.model = CNN_LSTM()
+        self.model = CNN_GRU()
         self._device = "cpu"
         self._epoch = 0
         self._eval_loss = float("inf")
